@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dotnet sln:*)",
+      "Bash(dotnet build:*)",
+      "Bash(dotnet test:*)",
+      "Read(//c/Users/User/source/DotNetBuildingBlocks/DotNetBuildingBlocks.Diagnostics/samples//**)",
+      "Bash(mkdir -p src/Core)",
+      "Bash(mv src/DotNetBuildingBlocks.Logging src/Core/)",
+      "Bash(mv src/DotNetBuildingBlocks.Tracing src/Core/)",
+      "Bash(mv src/DotNetBuildingBlocks.Metrics src/Core/)"
+    ]
+  }
+}

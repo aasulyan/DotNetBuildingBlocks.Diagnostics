@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>DotNetBuildingBlocks.Observability</RootNamespace>
+    <AssemblyName>DotNetBuildingBlocks.Observability</AssemblyName>
+
+    <IsPackable>true</IsPackable>
+
+    <PackageId>DotNetBuildingBlocks.Observability</PackageId>
+    <Version>1.0.0</Version>
+    <Title>DotNetBuildingBlocks.Observability</Title>
+    <Description>OpenTelemetry-based observability setup, instrumentation registration, and exporter configuration for the DotNetBuildingBlocks Diagnostics solution.</Description>
+    <Authors>DotNetBuildingBlocks</Authors>
+    <PackageTags>dotnet;diagnostics;observability;opentelemetry;tracing;metrics;otlp;instrumentation</PackageTags>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DotNetBuildingBlocks.Observation\DotNetBuildingBlocks.Observation.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
+    <PackageReference Include="Microsoft.Extensions.Options" />
+    <PackageReference Include="OpenTelemetry" />
+    <PackageReference Include="OpenTelemetry.Extensions.Hosting" />
+    <PackageReference Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" />
+    <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" />
+    <PackageReference Include="OpenTelemetry.Instrumentation.Http" />
+    <PackageReference Include="OpenTelemetry.Instrumentation.Runtime" />
+    <PackageReference Include="OpenTelemetry.Instrumentation.Process" />
+  </ItemGroup>
+
+</Project>

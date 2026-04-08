@@ -1,0 +1,59 @@
+# Build results
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+
+# User-specific files
+*.user
+*.rsuser
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Visual Studio
+.vs/
+
+# Rider
+.idea/
+
+# VS Code
+.vscode/
+
+# Test results
+TestResults/
+*.trx
+*.coverage
+*.coveragexml
+
+# NuGet
+*.nupkg
+*.snupkg
+packages/
+.nuget/
+
+# Generated files
+*.generated.cs
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Local environment / secrets
+.env
+.env.*
+appsettings.Development.json
+secrets.json
+
+# Coverage / reports
+coverage/
+coverage-report/
+
+# Publish output
+publish/
+
+# DotNet tool artifacts
+.dotnet/
+
+# ReSharper
+_ReSharper*/
+*.DotSettings.user

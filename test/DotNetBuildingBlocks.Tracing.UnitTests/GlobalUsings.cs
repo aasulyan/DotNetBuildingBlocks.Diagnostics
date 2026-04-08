@@ -1,0 +1,12 @@
+global using System.Diagnostics;
+global using FluentAssertions;
+global using Microsoft.Extensions.DependencyInjection;
+global using Microsoft.Extensions.Options;
+global using DotNetBuildingBlocks.Tracing.Abstractions;
+global using DotNetBuildingBlocks.Tracing.Activities;
+global using DotNetBuildingBlocks.Tracing.Context;
+global using DotNetBuildingBlocks.Tracing.DependencyInjection;
+global using DotNetBuildingBlocks.Tracing.Extensions;
+global using DotNetBuildingBlocks.Tracing.Options;
+global using DotNetBuildingBlocks.Tracing.Tags;
+global using Xunit;
