@@ -118,9 +118,13 @@ public sealed class ObservabilityServiceCollectionExtensionsTests
     {
         var services = new ServiceCollection();
 
-        var act = () => services.AddDotNetBuildingBlocksObservability();
+        services.AddDotNetBuildingBlocksObservability();
 
-        act.Should().Throw<ArgumentException>()
+        using var provider = services.BuildServiceProvider();
+
+        var act = () => provider.GetRequiredService<IOptions<ObservabilityOptions>>().Value;
+
+        act.Should().Throw<OptionsValidationException>()
             .WithMessage("*ServiceName*");
     }
 

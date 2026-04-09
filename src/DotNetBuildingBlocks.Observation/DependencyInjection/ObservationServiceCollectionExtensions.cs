@@ -61,6 +61,15 @@ public static class ObservationServiceCollectionExtensions
 
         var bootstrapOptions = new ObservationOptions();
         configure?.Invoke(bootstrapOptions);
+
+        // Defer validation errors to the options validation layer.
+        // If ServiceName is missing, skip the eager child-package registration;
+        // the OptionsValidationException will fire when IOptions<ObservationOptions>.Value is accessed.
+        if (string.IsNullOrWhiteSpace(bootstrapOptions.ServiceName))
+        {
+            return services;
+        }
+
         var bootstrapIdentity = ObservationIdentityResolver.Resolve(bootstrapOptions);
 
         if (bootstrapOptions.ConfigureLogging)

@@ -1,12 +1,13 @@
 using DotNetBuildingBlocks.Observation.DependencyInjection;
 using DotNetBuildingBlocks.Observability.Internal;
+using DotNetBuildingBlocks.Observability.Logging;
+using DotNetBuildingBlocks.Observability.Metrics;
 using DotNetBuildingBlocks.Observability.Options;
+using DotNetBuildingBlocks.Observability.Tracing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
 using OpenTelemetry;
-using OpenTelemetry.Metrics;
-using OpenTelemetry.Trace;
 
 namespace DotNetBuildingBlocks.Observability.DependencyInjection;
 
@@ -43,6 +44,14 @@ public static class ObservabilityServiceCollectionExtensions
         var bootstrapOptions = new ObservabilityOptions();
         configure?.Invoke(bootstrapOptions);
 
+        // Defer validation errors to the options validation layer.
+        // If ServiceName is missing, skip eager pipeline bootstrap;
+        // the OptionsValidationException will fire when IOptions<ObservabilityOptions>.Value is accessed.
+        if (string.IsNullOrWhiteSpace(bootstrapOptions.ServiceName))
+        {
+            return services;
+        }
+
         var serviceName = bootstrapOptions.ServiceName.Trim();
         var activitySourceName = string.IsNullOrWhiteSpace(bootstrapOptions.ActivitySourceName)
             ? serviceName
@@ -66,115 +75,26 @@ public static class ObservabilityServiceCollectionExtensions
         // Build the OpenTelemetry resource.
         var resourceBuilder = ResourceBuilderFactory.Create(bootstrapOptions, activitySourceName, meterName);
 
-        // Register OpenTelemetry SDK pipelines.
+        // Delegate pipeline configuration to folder-based configurators.
         var otelBuilder = services.AddOpenTelemetry();
 
         if (bootstrapOptions.EnableTracing)
         {
             otelBuilder.WithTracing(tracing =>
-            {
-                tracing.SetResourceBuilder(resourceBuilder);
-                tracing.AddSource(activitySourceName);
-
-                ConfigureTracingInstrumentations(tracing, bootstrapOptions.Instrumentations);
-                ConfigureTracingExporters(tracing, bootstrapOptions.Exporters);
-            });
+                TracingPipelineConfigurator.Configure(tracing, bootstrapOptions, resourceBuilder, activitySourceName));
         }
 
         if (bootstrapOptions.EnableMetrics)
         {
             otelBuilder.WithMetrics(metrics =>
-            {
-                metrics.SetResourceBuilder(resourceBuilder);
-                metrics.AddMeter(meterName);
+                MetricsPipelineConfigurator.Configure(metrics, bootstrapOptions, resourceBuilder, meterName));
+        }
 
-                ConfigureMetricsInstrumentations(metrics, bootstrapOptions.Instrumentations);
-                ConfigureMetricsExporters(metrics, bootstrapOptions.Exporters);
-            });
+        if (bootstrapOptions.EnableLogging)
+        {
+            LoggingPipelineConfigurator.Configure(bootstrapOptions);
         }
 
         return services;
-    }
-
-    private static void ConfigureTracingInstrumentations(
-        TracerProviderBuilder tracing,
-        ObservabilityInstrumentationOptions instrumentations)
-    {
-        if (instrumentations.AspNetCore.Enabled)
-        {
-            tracing.AddAspNetCoreInstrumentation();
-        }
-
-        if (instrumentations.HttpClient.Enabled)
-        {
-            tracing.AddHttpClientInstrumentation();
-        }
-    }
-
-    private static void ConfigureTracingExporters(
-        TracerProviderBuilder tracing,
-        ObservabilityExporterOptions exporters)
-    {
-        if (exporters.Otlp.Enabled)
-        {
-            tracing.AddOtlpExporter(otlp => ApplyOtlpOptions(otlp, exporters.Otlp));
-        }
-    }
-
-    private static void ConfigureMetricsInstrumentations(
-        MeterProviderBuilder metrics,
-        ObservabilityInstrumentationOptions instrumentations)
-    {
-        if (instrumentations.AspNetCore.Enabled)
-        {
-            metrics.AddAspNetCoreInstrumentation();
-        }
-
-        if (instrumentations.HttpClient.Enabled)
-        {
-            metrics.AddHttpClientInstrumentation();
-        }
-
-        if (instrumentations.Runtime.Enabled)
-        {
-            metrics.AddRuntimeInstrumentation();
-        }
-
-        if (instrumentations.Process.Enabled)
-        {
-            metrics.AddProcessInstrumentation();
-        }
-    }
-
-    private static void ConfigureMetricsExporters(
-        MeterProviderBuilder metrics,
-        ObservabilityExporterOptions exporters)
-    {
-        if (exporters.Otlp.Enabled)
-        {
-            metrics.AddOtlpExporter(otlp => ApplyOtlpOptions(otlp, exporters.Otlp));
-        }
-    }
-
-    private static void ApplyOtlpOptions(
-        OpenTelemetry.Exporter.OtlpExporterOptions otlp,
-        OtlpOptions options)
-    {
-        if (!string.IsNullOrWhiteSpace(options.Endpoint))
-        {
-            otlp.Endpoint = new Uri(options.Endpoint);
-        }
-
-        if (!string.IsNullOrWhiteSpace(options.Protocol))
-        {
-            otlp.Protocol = options.Protocol.Equals("grpc", StringComparison.OrdinalIgnoreCase)
-                ? OpenTelemetry.Exporter.OtlpExportProtocol.Grpc
-                : OpenTelemetry.Exporter.OtlpExportProtocol.HttpProtobuf;
-        }
-
-        if (options.Headers.Count > 0)
-        {
-            otlp.Headers = string.Join(",", options.Headers.Select(h => $"{h.Key}={h.Value}"));
-        }
     }
 }
