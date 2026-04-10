@@ -81,18 +81,18 @@ public static class ObservabilityServiceCollectionExtensions
         if (bootstrapOptions.EnableTracing)
         {
             otelBuilder.WithTracing(tracing =>
-                TracingPipelineConfigurator.Configure(tracing, bootstrapOptions, resourceBuilder, activitySourceName));
+                tracing.ConfigureDotNetBuildingBlocksTracing(bootstrapOptions, resourceBuilder, activitySourceName));
         }
 
         if (bootstrapOptions.EnableMetrics)
         {
             otelBuilder.WithMetrics(metrics =>
-                MetricsPipelineConfigurator.Configure(metrics, bootstrapOptions, resourceBuilder, meterName));
+                metrics.ConfigureDotNetBuildingBlocksMetrics(bootstrapOptions, resourceBuilder, meterName));
         }
 
         if (bootstrapOptions.EnableLogging)
         {
-            LoggingPipelineConfigurator.Configure(bootstrapOptions);
+            services.ConfigureDotNetBuildingBlocksLogging(bootstrapOptions);
         }
 
         return services;
