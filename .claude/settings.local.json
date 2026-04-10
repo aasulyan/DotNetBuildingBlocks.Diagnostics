@@ -8,7 +8,8 @@
       "Bash(mkdir -p src/Core)",
       "Bash(mv src/DotNetBuildingBlocks.Logging src/Core/)",
       "Bash(mv src/DotNetBuildingBlocks.Tracing src/Core/)",
-      "Bash(mv src/DotNetBuildingBlocks.Metrics src/Core/)"
+      "Bash(mv src/DotNetBuildingBlocks.Metrics src/Core/)",
+      "Bash(dotnet run:*)"
     ]
   }
 }
