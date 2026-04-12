@@ -1,0 +1,11 @@
+global using System.Diagnostics;
+global using DotNetBuildingBlocks.Serilog.Configuration;
+global using DotNetBuildingBlocks.Serilog.DependencyInjection;
+global using DotNetBuildingBlocks.Serilog.Enrichers;
+global using DotNetBuildingBlocks.Serilog.Options;
+global using DotNetBuildingBlocks.Serilog.UnitTests.TestInfrastructure;
+global using FluentAssertions;
+global using Serilog;
+global using Serilog.Core;
+global using Serilog.Events;
+global using Xunit;

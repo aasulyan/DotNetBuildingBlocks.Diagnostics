@@ -17,9 +17,9 @@
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
 
         <!-- Repository -->
-        <RepositoryUrl>https://github.com/aasulyan/DotNetBuildingBlocks.Foundation</RepositoryUrl>
+        <RepositoryUrl>https://github.com/aasulyan/DotNetBuildingBlocks.Diagnostics</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
-        <PackageProjectUrl>https://github.com/aasulyan/DotNetBuildingBlocks.Foundation</PackageProjectUrl>
+        <PackageProjectUrl>https://github.com/aasulyan/DotNetBuildingBlocks.Diagnostics</PackageProjectUrl>
         <PublishRepositoryUrl>true</PublishRepositoryUrl>
 
         <!-- Package authorship / license -->
