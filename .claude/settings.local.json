@@ -9,7 +9,8 @@
       "Bash(mv src/DotNetBuildingBlocks.Logging src/Core/)",
       "Bash(mv src/DotNetBuildingBlocks.Tracing src/Core/)",
       "Bash(mv src/DotNetBuildingBlocks.Metrics src/Core/)",
-      "Bash(dotnet run:*)"
+      "Bash(dotnet run:*)",
+      "Bash(dotnet pack:*)"
     ]
   }
 }

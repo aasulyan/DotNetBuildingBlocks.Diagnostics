@@ -8,7 +8,7 @@
     <IsPackable>true</IsPackable>
 
     <PackageId>DotNetBuildingBlocks.Observability</PackageId>
-    <Version>1.0.0</Version>
+    <Version>1.0.0-preview.1</Version>
     <Title>DotNetBuildingBlocks.Observability</Title>
     <Description>OpenTelemetry-based observability setup, instrumentation registration, and exporter configuration for the DotNetBuildingBlocks Diagnostics solution.</Description>
     <Authors>DotNetBuildingBlocks</Authors>
