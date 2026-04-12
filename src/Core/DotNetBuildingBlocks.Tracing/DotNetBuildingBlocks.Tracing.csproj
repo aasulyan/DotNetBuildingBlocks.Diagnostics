@@ -8,7 +8,7 @@
         <IsPackable>true</IsPackable>
 
         <PackageId>DotNetBuildingBlocks.Tracing</PackageId>
-        <Version>1.0.0</Version>
+        <Version>1.0.1</Version>
         <Title>DotNetBuildingBlocks.Tracing</Title>
         <Description>Reusable ActivitySource helpers, trace context propagation utilities, and provider-agnostic tracing extensions for the DotNetBuildingBlocks Diagnostics solution.</Description>
         <PackageTags>dotnet;building-blocks;tracing;diagnostics;activitysource;observability</PackageTags>

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
@@ -8,7 +8,7 @@
         <IsPackable>true</IsPackable>
 
         <PackageId>DotNetBuildingBlocks.Serilog</PackageId>
-        <Version>1.0.0</Version>
+        <Version>1.0.1</Version>
         <Title>DotNetBuildingBlocks.Serilog</Title>
         <Description>Serilog-specific integration, enrichers, and registration helpers for the DotNetBuildingBlocks Diagnostics solution.</Description>
         <PackageTags>dotnet;building-blocks;serilog;logging;diagnostics;observability</PackageTags>
@@ -17,6 +17,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="DotNetBuildingBlocks.Logging" />
         <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
         <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" />
@@ -27,10 +28,6 @@
         <PackageReference Include="Serilog.Settings.Configuration" />
         <PackageReference Include="Serilog.Sinks.Console" />
         <PackageReference Include="Serilog.Sinks.Debug" />
-    </ItemGroup>
-
-    <ItemGroup>
-        <ProjectReference Include="..\Core\DotNetBuildingBlocks.Logging\DotNetBuildingBlocks.Logging.csproj" />
     </ItemGroup>
 
 </Project>
